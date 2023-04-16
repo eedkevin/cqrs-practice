@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  nats:
+    image: 2.9-alpine3.17
+    restart: on-failure
+    networks:
+      - cqrs-practise-network
+    ports: 
+      - "4222:4222"
+      - "8222:8222"
+
+networks:
+  cqrs-practise-network:
+    name: cqrs-practise-network
