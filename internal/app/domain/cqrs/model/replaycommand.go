@@ -7,6 +7,6 @@ type ReplayCommand struct {
 	Payload struct {
 		StartTime time.Time
 		EndTime   time.Time
-		Env       string
+		ENV       string
 	}
 }

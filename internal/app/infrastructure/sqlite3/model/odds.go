@@ -8,7 +8,13 @@ import (
 
 type Odds struct {
 	gorm.Model
-	model.Odds
+	UUID      string
+	GameUUID  string
+	MoneyLine struct {
+		Home float64
+		Away float64
+		Draw float64
+	}
 	Deleted bool
 }
 

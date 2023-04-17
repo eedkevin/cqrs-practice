@@ -27,10 +27,12 @@ func Init() {
 
 // Config is the config
 type Config struct {
-	App    AppConfig    `mapstructure:"app"`
-	Redis  RedisConfig  `mapstructure:"redis"`
-	MySQL  MySQLConfig  `mapstructure:"mysql"`
-	SQLite SQLiteConfig `mapstructure:"sqlite"`
+	App         AppConfig         `mapstructure:"app"`
+	Redis       RedisConfig       `mapstructure:"redis"`
+	MySQL       MySQLConfig       `mapstructure:"mysql"`
+	SQLite      SQLiteConfig      `mapstructure:"sqlite"`
+	Nats        NatsConfig        `mapstructure:"sqlite"`
+	EventWorker EventWorkerConfig `mapstructure:"eventworker"`
 }
 
 // AppConfig is the app config
@@ -65,4 +67,16 @@ type MySQLConfig struct {
 // SQLiteConfig is the sqlite config
 type SQLiteConfig struct {
 	DB string `mapstructure:"db"`
+}
+
+type NatsConfig struct {
+	URL string `mapstructure:"url"`
+}
+
+type EventWorkerConfig struct {
+	Odds struct {
+		Name        string `mapstructure:"name"`
+		Event       string `mapstructure:"event"`
+		Concurrency int    `mapstructure:"concurrency"`
+	} `mapstructure:"odds"`
 }

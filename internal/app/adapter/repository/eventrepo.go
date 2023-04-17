@@ -5,6 +5,7 @@ import (
 	"cqrs-practise/internal/app/domain/event/repo"
 	"cqrs-practise/internal/app/infrastructure/sqlite3"
 	"cqrs-practise/internal/app/infrastructure/sqlite3/model"
+	"cqrs-practise/internal/cfg"
 
 	"github.com/pkg/errors"
 )
@@ -17,21 +18,33 @@ type SQLiteEventLogRepo struct {
 	DB *sqlite3.Client
 }
 
-func (ser *SQLiteEventRepo) Save(event domainModel.Event) error {
+func NewSQLiteEventRepo(cfg *cfg.Config) *SQLiteEventRepo {
+	return &SQLiteEventRepo{
+		DB: sqlite3.Connection(cfg),
+	}
+}
+
+func NewSQLiteEventLogRepo(cfg *cfg.Config) *SQLiteEventLogRepo {
+	return &SQLiteEventLogRepo{
+		DB: sqlite3.Connection(cfg),
+	}
+}
+
+func (ser *SQLiteEventRepo) Save(event domainModel.Event) (*domainModel.Event, error) {
 	evt := model.Event{}
 	evt.FromModel(event)
 
 	err := ser.DB.Create(&evt).Error
 	if err != nil {
-		return errors.Wrap(err, "Error saving event")
+		return nil, errors.Wrap(err, "Error saving event")
 	}
-	return nil
+	return evt.ToModel(), nil
 }
 
 func (ser *SQLiteEventRepo) Get(UUID string) (*domainModel.Event, error) {
 	var evt model.Event
 
-	err := ser.DB.First(&evt, UUID).Error
+	err := ser.DB.Where("uuid = ?", UUID).First(&evt).Error
 	if err != nil {
 		return nil, errors.Wrap(err, "Error getting event")
 	}
@@ -68,7 +81,7 @@ func (selr *SQLiteEventLogRepo) Save(eventlog domainModel.EventLog) error {
 func (selr *SQLiteEventLogRepo) Get(UUID string) (*domainModel.EventLog, error) {
 	var evtlog model.EventLog
 
-	err := selr.DB.First(&evtlog, UUID).Error
+	err := selr.DB.Where("uuid = ?", UUID).First(&evtlog).Error
 	if err != nil {
 		return nil, errors.Wrap(err, "Error getting eventlog")
 	}

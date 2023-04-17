@@ -8,7 +8,10 @@ import (
 
 type EventLog struct {
 	gorm.Model
-	model.EventLog
+	UUID             string
+	EventUUID        string
+	Domain           string
+	DomainObjectUUID string
 }
 
 func (l *EventLog) ToModel() *model.EventLog {

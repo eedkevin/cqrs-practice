@@ -1,9 +1,6 @@
 .PHONY: install
 install:
-	go install golang.org/x/lint/golint@latest
-	go install github.com/fzipp/gocyclo/cmd/gocyclo@latest
-	brew install pre-commit
-	pre-commit install
+	go install github.com/cosmtrek/air@latest
 
 .PHONY: test
 test:
@@ -11,11 +8,15 @@ test:
 
 .PHONY: up
 up:
-	go run cmd/app/main.go
+	go run main.go
 
-.PHONY: dev
-dev:
-	docker compose up watch-app
+.PHONY: dev-oddsworker
+dev-oddsworker:
+	air -c .oddsworker.air.toml
+
+.PHONY: dev-replayservice
+dev-replayservice:
+	air -c .replayservice.air.toml
 
 .PHONY: infra-up
 infra-up:
