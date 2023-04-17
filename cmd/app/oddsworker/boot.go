@@ -6,6 +6,7 @@ import (
 )
 
 func Bootstrap() {
+	cfg.Init()
 	oddsworker := app.NewOddsWorker(&cfg.Cfg)
 	oddsworker.Loop()
 }

@@ -7,6 +7,7 @@ import (
 )
 
 func Bootstrap() {
+	cfg.Init()
 	server := app.NewReplayServer(&cfg.Cfg)
 	server.Run(fmt.Sprintf(":%v", server.Cfg.App.ServerPort))
 }
