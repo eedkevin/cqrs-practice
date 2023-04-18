@@ -4,7 +4,6 @@ import (
 	"cqrs-practise/internal/app/application/service"
 	"cqrs-practise/internal/app/domain/cqrs/model"
 	"cqrs-practise/internal/app/domain/odds/repo"
-	"fmt"
 	"log"
 
 	"github.com/pkg/errors"
@@ -21,10 +20,9 @@ func HandleOddsEvent(eventbus service.EventBus, oddsrepo repo.OddsRepo, params H
 
 	event, err := eventbus.QueueReceive(params.EventBusSubject, params.EventBusQueue)
 	if err != nil {
-		log.Printf("%s: Error on consuming eventbus", USECASE_NAME)
+		log.Printf("Error: %v\n", err)
 		return errors.Wrap(err, "Error on consuming eventbus")
 	}
-	fmt.Println(event)
 
 	if event.Domain == "odds" {
 		oddscmd := event.Payload.(model.OddsCommand)

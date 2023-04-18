@@ -5,7 +5,7 @@ install:
 .PHONY: setup
 setup:
 	cp .env.template .env && sed -i "" -e 's/{{sqlite-db}}/.\/data\/data.db/g' .env && sed -i "" -e 's/{{nats-url}}/nats:\/\/127.0.0.1:4222/g' .env
-	cp .env.template .env.docker && sed -i "" -e 's/{{sqlite-db}}/.data.db/g' .env.docker && sed -i "" -e 's/{{nats-url}}/nats:\/\/nats-server/g' .env.docker
+	cp .env.template .env.docker && sed -i "" -e 's/{{sqlite-db}}/.\/data.db/g' .env.docker && sed -i "" -e 's/{{nats-url}}/nats:\/\/nats-server/g' .env.docker
 
 .PHONY: test
 test:

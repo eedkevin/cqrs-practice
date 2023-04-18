@@ -57,7 +57,7 @@ func (neb *NatsEventBus) Receive(subject string) (*model.Event, error) {
 func (neb *NatsEventBus) QueueReceive(subject string, queue string) (*model.Event, error) {
 	sub, err := neb.Client.QueueSubscribeSync(subject, queue)
 	if err != nil {
-		return nil, errors.Wrap(err, "Timeout on (queue)receiving from eventbus")
+		return nil, errors.Wrap(err, "Error on (queue)subscribe eventbus")
 	}
 	m, err := sub.NextMsg(TIMEOUT)
 	if err != nil {

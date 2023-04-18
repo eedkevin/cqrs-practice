@@ -49,7 +49,7 @@ This repo uses a boilerplate from https://github.com/eedkevin/ddd-boilerplate-go
 ## Quick Start
 ### Lift up the stack via docker compose
 ```sh
-$ make compose-up
+$ make stack-up
 ```
 
 ### Local Development
