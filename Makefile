@@ -4,14 +4,15 @@ install:
 
 .PHONY: setup
 setup:
-	cp .env.template .env
+	cp .env.template .env && sed -i "" -e 's/{{sqlite-db}}/.\/data\/data.db/g' .env && sed -i "" -e 's/{{nats-url}}/nats:\/\/127.0.0.1:4222/g' .env
+	cp .env.template .env.docker && sed -i "" -e 's/{{sqlite-db}}/.data.db/g' .env.docker && sed -i "" -e 's/{{nats-url}}/nats:\/\/nats-server/g' .env.docker
 
 .PHONY: test
 test:
 	go test -v ./...
 
 .PHONY: up-oddsworker
-up:
+up-oddsworker:
 	go run main.go -app=oddsworker
 
 .PHONY: up-replayservice
@@ -28,11 +29,11 @@ dev-replayservice:
 
 .PHONY: infra-up
 infra-up:
-	docker compose up nats -d
+	docker compose up nats-server -d
 
 .PHONY: infra-down
 infra-down:
-	docker compose down nats
+	docker compose down nats-server
 
 .PHONY: stack-up
 stack-up:

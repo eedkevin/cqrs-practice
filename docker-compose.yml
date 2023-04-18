@@ -12,10 +12,8 @@ services:
     depends_on:
       - nats-server
     command: ["/bin/sh", "-c", "/app/app -app=replayservice"]
-    env_file:
-      - .env
-    environment:
-      - nats.url=nats://nats-server:4222
+    volumes:
+      - .env.docker:/app/.env:ro
 
   odds-worker:
     build:
@@ -26,10 +24,8 @@ services:
     depends_on:
       - nats-server
     command: ["/bin/sh", "-c", "/app/app -app=oddsworker"]
-    env_file:
-      - .env
-    environment:
-      - nats.url=nats://nats-server:4222
+    volumes:
+      - .env.docker:/app/.env:ro
 
   nats-server:
     image: nats:2.9-alpine3.17

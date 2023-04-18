@@ -3,4 +3,5 @@
 dist/
 tmp/
 .env
+.env.docker
 **/*.db

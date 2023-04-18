@@ -1,6 +1,6 @@
-FROM golang:1.20 AS builder
+FROM golang:1.20-alpine3.17 AS builder
 
-RUN apk add --no-cache git ca-certificates
+RUN apk add --no-cache git ca-certificates build-base
 
 ARG GOPROXY=https://proxy.golang.org,direct
 
@@ -17,6 +17,5 @@ RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o app main.go
 FROM alpine:3.7
 WORKDIR /app
 COPY --from=builder /app/app .
-COPY --from=builder /app/.env .
 EXPOSE 8080
 CMD ["./app"]
