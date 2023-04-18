@@ -1,7 +1,37 @@
 version: "3"
 
 services:
-  nats:
+  replay-service:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    networks:
+      - cqrs-practise-network
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nats-server
+    command: ["/bin/sh", "-c", "/app/app -app=replayservice"]
+    env_file:
+      - .env
+    environment:
+      - nats.url=nats://nats-server:4222
+
+  odds-worker:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    networks:
+      - cqrs-practise-network
+    depends_on:
+      - nats-server
+    command: ["/bin/sh", "-c", "/app/app -app=oddsworker"]
+    env_file:
+      - .env
+    environment:
+      - nats.url=nats://nats-server:4222
+
+  nats-server:
     image: nats:2.9-alpine3.17
     restart: on-failure
     networks:

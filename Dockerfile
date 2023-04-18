@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine AS builder
+FROM golang:1.20 AS builder
 
 RUN apk add --no-cache git ca-certificates
 
@@ -12,7 +12,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app main.go
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o app main.go
 
 FROM alpine:3.7
 WORKDIR /app

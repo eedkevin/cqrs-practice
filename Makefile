@@ -2,13 +2,21 @@
 install:
 	go install github.com/cosmtrek/air@latest
 
+.PHONY: setup
+setup:
+	cp .env.template .env
+
 .PHONY: test
 test:
 	go test -v ./...
 
-.PHONY: up
+.PHONY: up-oddsworker
 up:
-	go run main.go
+	go run main.go -app=oddsworker
+
+.PHONY: up-replayservice
+up-replayservice:
+	go run main.go -app=replayservice
 
 .PHONY: dev-oddsworker
 dev-oddsworker:
@@ -25,3 +33,11 @@ infra-up:
 .PHONY: infra-down
 infra-down:
 	docker compose down nats
+
+.PHONY: stack-up
+stack-up:
+	docker compose up --build
+
+.PHONY: stack-down
+stack-down:
+	docker compose down

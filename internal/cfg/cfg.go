@@ -31,7 +31,7 @@ type Config struct {
 	Redis       RedisConfig       `mapstructure:"redis"`
 	MySQL       MySQLConfig       `mapstructure:"mysql"`
 	SQLite      SQLiteConfig      `mapstructure:"sqlite"`
-	Nats        NatsConfig        `mapstructure:"sqlite"`
+	Nats        NatsConfig        `mapstructure:"nats"`
 	EventWorker EventWorkerConfig `mapstructure:"eventworker"`
 }
 
